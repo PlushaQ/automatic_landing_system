@@ -30,7 +30,3 @@ class DatabaseConnection:
     def conn_info(self):
         self._connect()
         return self
-
-
-
-

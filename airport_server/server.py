@@ -3,6 +3,7 @@ import json
 import datetime
 import threading
 
+from server_config import SERVER_CONFIG
 from database.database_manager import AirportDatabase
 
 
@@ -36,8 +37,11 @@ class ClientThread(threading.Thread):
 
 
 class Server:
-    def __init__(self, host, port):
-        self.address = (host, port)
+    def __init__(self):
+        self.address = (
+            SERVER_CONFIG['host'],
+            SERVER_CONFIG['port']
+        )
         self.server_start_time = datetime.datetime.now()
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -62,14 +66,14 @@ class Server:
 
     def stop(self):
         # Close all client threads gracefully
-        # self.db.db_conn_pool.run = False
+        self.db.db_conn_pool.run = False
         self.server_run = False
         for thread in self.client_threads:
             thread.join()  # Wait for each thread to finish
-        # self.db.close_connections()
+        self.db.close_connections()
         self.socket.close()
 
 
 if __name__ == '__main__':
-    server = Server('127.0.0.1', 64321)
+    server = Server()
     server.run()
