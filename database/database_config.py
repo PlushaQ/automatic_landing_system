@@ -8,4 +8,4 @@ POSTGRES = {
 
 SQLITE3 = {'database': 'airport_database.db'}
 
-DB_CONFIG = SQLITE3
+DB_CONFIG = POSTGRES
